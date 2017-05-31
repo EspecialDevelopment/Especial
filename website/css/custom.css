@@ -1,6 +1,10 @@
+#header{
+  height:130px;
+}
+
 #welcome{
   position:relative;
-  top:-10px;
+  top:17px;
   overflow:hidden;
   padding:0 20px;
   height:104px;
