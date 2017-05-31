@@ -1,0 +1,36 @@
+#welcome{
+  position:relative;
+  top:-10px;
+  overflow:hidden;
+  padding:0 20px;
+  height:104px;
+  width:280px;
+  background-color:#f4821e;
+  border-radius:10px;
+}
+
+/*#welcome h1{
+  position:relative;
+  top:-2px;
+  left:-5px;
+  margin:0;
+  padding:0 5px;
+  height:100%;
+  width:100%;
+  background-color:cyan;
+  background-image:url('../images/assets/logo_grande.png');
+  background-size:5px 100%;
+  background-repeat:repeat-x;
+  border-radius:100%:
+}*/
+
+#welcome img{
+  height:104px;
+  width:auto;
+}
+
+#slider img{
+  position:relative;
+  left:50%;
+  transform:translateX(-50%);
+}
