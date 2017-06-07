@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conexion>
+	
+	<hostl>localhost</hostl>
+	<userl>root</userl>
+	<pswl>-</pswl>
+	<dbl>especial</dbl>
+	
+	<hostr>sql5c75d.carrierzone.com</hostr>
+	<userr>panaderial157992</userr>
+	<pswr>gaga770610</pswr>
+	<dbr>especial__panaderial157992</dbr>
+	
+</conexion>
+		
