@@ -6,8 +6,11 @@ function calcularTotal() {
   for (var i = 0, l = formC.elements.length; i < l; i++) {
     // El input actual a evaluar
     input = formC.elements[i];
-    if (input.type == 'number') {
+    if (input.type == 'number' && input.name != 'resultado') {
       input.value = input.value.trim();
+      if (input.value < 0) {
+        input.value = 0;
+      }
       if (input.name.indexOf('c') == -1) {
         sum += input.value * input.name;
       } else {
@@ -16,12 +19,12 @@ function calcularTotal() {
       }
     }
   }
-  resultado.innerText = '$ ' + sum.toFixed(2);
+  resultado.value = sum.toFixed(2); // '$ ' + sum.toFixed(2);
 }
 
 window.onload = function() {
   formC = document.forms['vueltascentralizado'];
-  resultado = document.getElementById('resultado');
+  resultado = formC['resultado'];
   formC.addEventListener('keyup', function(e) {
     clearInterval(intervalo);
     intervalo = setInterval(calcularTotal, 150);

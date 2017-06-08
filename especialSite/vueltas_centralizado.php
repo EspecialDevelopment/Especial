@@ -143,8 +143,8 @@
  					<td class="tdClassMenor">
  						Total:
  					</td>
- 					<td id="resultado" class="tdClassMenor">
-						-
+ 					<td class="tdClassMenor">
+						<input value="0" name="resultado" type="number" required class="tdClassMenor" style="border:none;width:150px;"/>
  					</td>
  				</tr>
  			</table>
