@@ -1,9 +1,10 @@
-@CHARSET "ISO-8859-1";
-.divCentral{
-
+@charset "UTF-8";
+.divCentral
+{
 	width: 800px;
 	margin-left: auto;
 	margin-right: auto;
+	border: solid;
 }
 
 .titulo1
@@ -17,15 +18,14 @@
 {
 	font-family: arial;
 	font-size: 30px;
-
 }
+
 .tableClass
 {
 	border:solid;
 	border-collapse: collapse;
 	margin-left: auto;
 	margin-right: auto;
-
 }
 
 .tdClass
@@ -36,6 +36,7 @@
 	font-family: arial;
 	font-size: 40px;
 }
+
 .tdClassMenor
 {
 	border:solid;
@@ -60,26 +61,4 @@
 	font-size: 15px;
 	font-weight: bolder;
 	color: blue;
-}
-
-#res
-{
-	display:flex;
-	justify-content: center;
-	align-items: center;
-	margin: 5px auto;
-	height:37px;
-	width: 405px;
-	border: 2px solid black;
-	font-family: arial;
-	font-size: 30px;
-	font-weight: bolder;
-}
-
-#res > div
-{
-	height: 100%;
-	width: 50%;
-	border:1px solid black;
-	text-align: center;
 }

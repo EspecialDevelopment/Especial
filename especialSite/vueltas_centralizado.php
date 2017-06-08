@@ -1,41 +1,39 @@
 
 <html>
 	<head>
-		 <link rel="stylesheet" href="style.css">
-		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		 <?php 
-		 
-		 	include 'libreria_centralizado.php';
-		 	session_start();
-		 ?>
+		<link rel="stylesheet" href="style.css">
+	 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	 	<?php
+	 		include 'libreria_centralizado.php';
+	 		session_start();
+	 	?>
 	</head>
 
 <body>
- 
+
  	<div class="divCentral">
- 	
- 		<?php 
-  			echo '<p class="titulo2" style="text-align: center;">';
- 			
-  			echo utf8_encode('Captura de Efectivo: ');
 
-  			$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+ 		<?php
+			echo '<p class="titulo2" style="text-align: center;">';
 
-  			$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
- 			
-  			echo $dias[date('w')]." ".date('d')." de ".$meses[date('n')-1]. " del ".date('Y') ;
-  			
+			echo utf8_encode('Captura de Efectivo: ');
+
+			$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sï¿½bado");
+
+			$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+			echo $dias[date('w')]." ".date('d')." de ".$meses[date('n')-1]. " del ".date('Y') ;
+
  			echo '<p class="titulo2" style="text-align: center;">';
- 			
- 			$_SESSION['vuelta'] = obtenNoVuelta(); 
- 			
+
+ 			$_SESSION['vuelta'] = obtenNoVuelta();
+
  			echo "Vuelta No. ".$_SESSION['vuelta'];
- 			
+
  			echo'</p>';
-  		?>
- 	
- 		<form action="vueltas_centralizado.php" method="post">
- 		
+  	?>
+
+ 		<form name="vueltascentralizado" method="post" action="vueltas_centralizado.php">
  			<table class="tableClass">
  				<tr>
  					<td class="tdClassMenor">
@@ -77,7 +75,6 @@
  						<input type="number" value="0" name="50" required class="tdClassMenor" style="border:none;width:150px">
  					</td>
  				</tr>
- 			
  				<tr>
  					<td class="tdClassMenor">
  						$20.00
@@ -134,7 +131,7 @@
  						<input type="number" value="0" name="c20" required class="tdClassMenor" style="border:none;width:150px">
  					</td>
  				</tr>
- 				<tr>
+				<tr>
  					<td class="tdClassMenor">
  						$0.10
  					</td>
@@ -142,44 +139,43 @@
  						<input type="number" value="0" name="c10" required class="tdClassMenor" style="border:none;width:150px">
  					</td>
  				</tr>
+				<tr>
+ 					<td class="tdClassMenor">
+ 						Total:
+ 					</td>
+ 					<td id="resultado" class="tdClassMenor">
+						-
+ 					</td>
+ 				</tr>
  			</table>
- 		
  			<p style="text-align: center;">
- 		
  				<input type="submit" value="Guardar" class="titulo2" >
- 		
  			</p>
- 		</form>	
- 		<?php 
- 		
- 			if ((isset($_REQUEST["1000"]))&&
- 				(isset($_REQUEST["500"]))&&
- 				(isset($_REQUEST["200"]))&&
- 				(isset($_REQUEST["100"]))&&
- 				(isset($_REQUEST["50"]))&&
- 				(isset($_REQUEST["20"]))&&
- 				(isset($_REQUEST["10"]))&&
- 				(isset($_REQUEST["5"]))&&
- 				(isset($_REQUEST["2"]))&&
- 				(isset($_REQUEST["1"]))&&
- 				(isset($_REQUEST["c50"]))&&
- 				(isset($_REQUEST["c20"]))&&
- 				(isset($_REQUEST["c10"])))
- 			{
+ 		</form>
+
+ 		<?php
+			$valoresREQUEST = array(
+				'1000', '500', '200', '100',
+				'50', '20', '10', '5', '1',
+				'c50', 'c20', 'c10');
+			$valoresREQUESTvalidos = true;
+			foreach ($valoresREQUEST as $num) {
+				if (!isset($_REQUEST[$num])) {
+					$valoresREQUESTvalidos = false;
+					break;
+				}
+			}
+ 			if ($valoresREQUESTvalidos) {
  				$monto = "100";
- 				
  				if ((isset($_SESSION['vuelta']))&&(isset($_SESSION['corte'])))
  				{
  					insertaVuelta($_SESSION['corte'],$_SESSION['vuelta'], $_REQUEST, $monto);
- 			 		
  				}
- 				
  			}
- 		
  		?>
 
-	</div>  
+	</div>
+	<script type="text/javascript" src="js/libreria.js"></script>
 </body>
 
 </html>
-
