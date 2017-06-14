@@ -67,18 +67,18 @@
 
 		echo $conexion->connect_error;
 
-		$sql = "SELECT vueltas.id_vuelta, cortes.id_corte FROM vueltas ".
+		$sql = "SELECT no_vuelta FROM vueltas ".
 			   "INNER JOIN cortes ".
 			   "ON (cortes.id_corte = vueltas.cortes_id_corte )".
-			   "WHERE (cortes.fecha_corte =". "'".$fecha."')";
+			   "WHERE (cortes.fecha_corte =". "'".$fecha."') ORDER BY no_vuelta DESC";
 
 		$resultado = $conexion->query($sql);
-
-		$vuelta = $resultado->num_rows + 1;
-
+		
+		$vuelta = $resultado->fetch_assoc();
+		
 		$conexion->close();
 
-		return $vuelta;
+		return $vuelta["no_vuelta"]+1;
 
 	}
 
@@ -93,29 +93,34 @@
 		$sql = "INSERT INTO vueltas VALUES (NULL,".$corte.",".$vuelta.",".$monto.")";
 
 		$resultado = $conexion->query($sql);
-
+		
+		$sql = "SELECT id_vuelta FROM vueltas ORDER BY id_vuelta DESC LIMIT 1";
+		
+		$resultado = $conexion->query($sql);
+		
+		$vuelta = $resultado->fetch_assoc();
+		
 		foreach ($efectivo AS $indice => $valor)
 		{
 			if ($indice == "c50")
 			{
-				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta.","."0.50".",".$valor.")";
+				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta["id_vuelta"].","."0.50".",".$valor.")";
 			}
 			elseif ($indice == "c20")
 			{
-				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta.","."0.20".",".$valor.")";
+				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta["id_vuelta"].","."0.20".",".$valor.")";
 			}
 			elseif ($indice == "c10")
 			{
-				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta.","."0.10".",".$valor.")";
+				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta["id_vuelta"].","."0.10".",".$valor.")";
 			}
 			else
 			{
-				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta.",".$indice.",".$valor.")";
+				$sql = "INSERT INTO efectivo VALUES (NULL,".$vuelta["id_vuelta"].",".$indice.",".$valor.")";
 			}
 
 			$resultado = $conexion->query($sql);
 		}
-
 
 		$conexion->close();
 	}

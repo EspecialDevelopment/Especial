@@ -26,10 +26,16 @@
 
  			echo '<p class="titulo2" style="text-align: center;">';
 
- 			$_SESSION['vuelta'] = obtenNoVuelta();
-
- 			echo "Vuelta No. ".$_SESSION['vuelta'];
-
+ 			if (isset($_SESSION['vuelta']))
+ 			{
+				$_SESSION['vuelta'] = $_SESSION['vuelta']+1;
+ 			}
+ 			else 
+ 			{ 
+ 				$_SESSION['vuelta'] = obtenNoVuelta();
+ 			}
+ 			
+ 			echo "Vuelta No." . $_SESSION['vuelta'];
  			echo'</p>';
   	?>
 
@@ -166,12 +172,14 @@
 				}
 			}
  			if ($valoresREQUESTvalidos) {
- 				$monto = "100";
  				if ((isset($_SESSION['vuelta']))&&(isset($_SESSION['corte'])))
  				{
- 					insertaVuelta($_SESSION['corte'],$_SESSION['vuelta'], $_REQUEST, $monto);
+ 					
+ 					insertaVuelta($_SESSION['corte'],obtenNoVuelta(), $_REQUEST, $_REQUEST['resultado']);
  				}
  			}
+ 			 			
+ 			
  		?>
 
 	</div>
