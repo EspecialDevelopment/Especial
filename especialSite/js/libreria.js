@@ -22,12 +22,19 @@ function calcularTotal() {
   resultado.value = sum.toFixed(2); // '$ ' + sum.toFixed(2);
 }
 
+function correrTimer() {
+  clearInterval(intervalo);
+  intervalo = setInterval(calcularTotal, 150);
+}
+
 window.onload = function() {
   formC = document.forms['vueltascentralizado'];
   resultado = formC['resultado'];
   formC.addEventListener('keyup', function(e) {
-    clearInterval(intervalo);
-    intervalo = setInterval(calcularTotal, 150);
+    correrTimer();
+  });
+  formC.addEventListener('mouseup' ,function(e) {
+    correrTimer();
   });
   document.addEventListener('wheel', function(e) {
     if (document.activeElement.type == 'number') {
