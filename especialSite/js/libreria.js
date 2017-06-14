@@ -8,7 +8,7 @@ function calcularTotal() {
     input = formC.elements[i];
     if (input.type == 'number' && input.name != 'resultado') {
       input.value = input.value.trim();
-      if (input.value < 0) {
+      if (input.value <= 0) {
         input.value = 0;
       }
       if (input.name.indexOf('c') == -1) {
