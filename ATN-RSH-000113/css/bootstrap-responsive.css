@@ -1070,7 +1070,7 @@ display: none !important;
 
 @media (max-width: 979px) { 
 
-  .nav-collapse .nav > li > a{padding: 10px !important; background: #6f7678 !important; color: #fff !important;}
+  .nav-collapse .nav > li > a{padding: 10px !important; background: #FFA500 !important; color: #fff !important;}
   body {
     padding-top: 0;
   }
