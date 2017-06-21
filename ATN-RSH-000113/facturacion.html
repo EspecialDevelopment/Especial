@@ -56,10 +56,10 @@
           </a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">Home</a></li>
               <li><a href="#">About</a></li>
               <li><a href="#">Services</a></li>
-              <li><a href="facturacion.html">Facturación</a></li>
+              <li class="active"><a href="#">Facturación</a></li>
               <li><a href="#">Contact</a></li>
             </ul>
             <form class="search-form">
@@ -78,7 +78,7 @@
 
                 <div class="banner">
                     <div class="carousel slide" id="myCarousel">
-                                    <!-- Carousel items -->
+                        <!-- Carousel items -->
                         <div class="carousel-inner">
                             <div class="item active">
                                 <img src="img/banner-image.jpg" alt="">
@@ -119,15 +119,21 @@
                  <!-- Main content starts here -->
 
                 <div class="featured-blocks">
-                    <div class="row-fluid">
+                  <div class="row-fluid">
                     <div class="featured-heading">
-                        <h1>Nunc dig nissi</h1>
-                        <h5>Phasellus ultrices nulla quis</h5>
+                      <h1>Facturación</h1>
+                      <h5>Busca tu RFC -> Intente con este NUHS942321</h5>
                     </div>
+                  </div>
+                  <div>
+                    <input id="rfcFind" type="text" onkeyup="verifyAuthenticity(this)">
+                    <h5 id="rfcOutput"></h5>
+                    <div id="rfcShow">
+                      <iframe id="rfcResults" name="rfcResults"></iframe>
+                      <div name="optionbuttons"></div>
                     </div>
-                    <div class="row-fluid">
-
-
+                  </div>
+                    <!-- <div class="row-fluid">
                                 <div class="span4">
                             <div class="block">
                                 <div class="block-title">
@@ -173,11 +179,7 @@
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed mattis sed mauris a accumsan. Phasellus quis scelerisque lacus. Aenean nec orci sit amet justo interdum ullamcorper eget eu diam. Integer dictum sem eu adipiscing cursus. Suspendisse posuere dui eu dignissim fermentum. .</p>
                       <p>Phasellus adipiscing porttitor metus, eget commodo mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut hendrerit ante. Phasellus viverra ligula tortor, ut sodales elit tempus eu. Vestibulum mattis sed purus at laoreet. Proin mattis, ante vel adipiscing porttitor, orci elit venenatis nibh, at molestie tortor dolor sit amet urna.  .</p>
                     </div>
-
-
-
-
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -488,7 +490,6 @@
                 <div class="copy-rights">
                     Copyright (c) websitename. All rights reserved.  Designed by: <a href="http://www.alltemplateneeds.com."> www.alltemplateneeds.com.</a>  Images From: <a href="http://www.wallcoo.net"> www.wallcoo.net</a>
                 </div>
-
             </div>
 
        <script src="js/jquery-1.9.1.js"></script>
@@ -498,21 +499,18 @@
     <script src="js/classie.js"></script>
     <script src="js/AnimOnScroll.js"></script>
 
-    <script>
-      new AnimOnScroll( document.getElementById( 'grid' ), {
-        minDuration : 0.4,
-        maxDuration : 0.7,
-        viewportFactor : 0.2
-      } );
-    </script>
-<script>
-$('#myCarousel').carousel({
-    interval: 1800
-});
-</script>
-
-
-
-
-   </body>
+  <script>
+    new AnimOnScroll(document.getElementById('grid'), {
+      'minDuration': 0.4,
+      'maxDuration': 0.7,
+      'viewportFactor': 0.2
+    });
+  </script>
+  <script>
+    $('#myCarousel').carousel({
+      interval: 1800
+    });
+  </script>
+  <script src="js/srgo.js"></script>
+</body>
 </html>

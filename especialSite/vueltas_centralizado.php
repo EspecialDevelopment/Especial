@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<link rel="stylesheet" href="style.css">
@@ -30,11 +29,11 @@
  			{
 				$_SESSION['vuelta'] = $_SESSION['vuelta']+1;
  			}
- 			else 
- 			{ 
+ 			else
+ 			{
  				$_SESSION['vuelta'] = obtenNoVuelta();
  			}
- 			
+
  			echo "Vuelta No." . $_SESSION['vuelta'];
  			echo'</p>';
   	?>
@@ -174,12 +173,12 @@
  			if ($valoresREQUESTvalidos) {
  				if ((isset($_SESSION['vuelta']))&&(isset($_SESSION['corte'])))
  				{
- 					
+
  					insertaVuelta($_SESSION['corte'],obtenNoVuelta(), $_REQUEST, $_REQUEST['resultado']);
  				}
  			}
- 			 			
- 			
+
+
  		?>
 
 	</div>
