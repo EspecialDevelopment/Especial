@@ -4,7 +4,11 @@ var timer = null,
   rfcOutput = document.getElementById('rfcOutput'),
   rfcShow = document.getElementById('rfcShow'),
   rfcResults = document.getElementById('rfcResults'),
-  lastSearch = null;
+  last = {
+    'search': null,
+    'message': '',
+    'document': null
+  };
 
 const RFC_REGEX = /([a-z]\w{3})([0-9]\d{5})/i;
 
@@ -35,12 +39,14 @@ function ajaxCall() {
     if (this.readyState == 4 && this.status == 200) {
       var json = JSON.parse(this.responseText);
       if (json['dirs'].length > 0) {
-        rfcOutput.innerText = 'Se han encontrado resultados.';
+        last['message'] = 'Se han encontrado resultados.'
+        last['document'] = json['dirs'];
         setiFrame(json['dirs']);
       } else {
+        last['message'] = 'No hay resultados.';
         rfcShow.style['display'] = 'none';
-        rfcOutput.innerText = 'No hay resultados.';
       }
+      rfcOutput.innerText = last['message'];
     } else if (this.readyState == 4 && this.status != 200) {
       rfcOutput.innerText = 'No se ha podido realizar la búsqueda.';
     }
@@ -51,12 +57,14 @@ function ajaxCall() {
 }
 
 function readFiles() {
-  rfcInput.value = rfcInput.value.trim();
   if (rfcInput.value.length == 10 && RFC_REGEX.test(rfcInput.value)) {
-    if (lastSearch != rfcInput.value) {
-      lastSearch = rfcInput.value;
+    if (last['search'] != rfcInput.value) {
+      last['search'] = rfcInput.value;
       rfcOutput.innerText = 'Buscando...';
       ajaxCall();
+    } else {
+      rfcOutput.innerText = last['message'];
+      setiFrame(last['document']);
     }
   } else {
     rfcShow.style['display'] = 'none';
@@ -65,7 +73,9 @@ function readFiles() {
 }
 
 function verifyAuthenticity(self) {
+  rfcOutput.innerText = '...';
   rfcInput = self;
+  rfcInput.value = rfcInput.value.trim();
   clearTimeout(timer);
-  timer = setTimeout(readFiles, 200);
+  timer = setTimeout(readFiles, 500);
 }
