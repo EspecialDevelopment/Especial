@@ -1,0 +1,83 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  justify-content: center;
+  align-items: center;
+}
+
+#interface {
+  position: relative;
+  height: 712.5px;
+  width: 950px;
+}
+
+#interface::before {
+  content: "";
+  opacity: 0.5;
+  position: absolute;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  background-image: url("../../pantalla.png");
+  background-repeat: no-repeat;
+  background-size: 100% 107%;
+  background-position: 0 30%;
+}
+
+#interface > .wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#root .top-panel,
+#root .right-panel,
+#root .bottom-panel,
+#root .left-panel {
+  float: left;
+  height: 100%;
+  width: 100%;
+}
+
+#root > .left-panel {
+  width: 83%;
+  background-color: red;
+}
+
+#root > .left-panel > .top-panel {
+  height: 64.75%;
+  background-color: magenta;
+}
+
+#root > .left-panel > .top-panel > .left-panel {
+  width: 39%;
+  background-color: red;
+}
+
+#root > .left-panel > .top-panel > .right-panel {
+  width: 61%;
+  background-color: blue;
+}
+
+#root > .left-panel > .bottom-panel {
+  height: 35.25%;
+  background-color: cyan;
+}
+
+#root > .right-panel {
+  width: 17%;
+  background-color: blue;
+}
