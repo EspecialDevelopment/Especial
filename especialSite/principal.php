@@ -14,7 +14,7 @@
 	if(isset($_REQUEST['sucursal']))
 	{	 	
  		$_SESSION['sucursal']= $_REQUEST['sucursal'];
-		
+		echo $_REQUEST['sucursal'];
  		setcookie("sucursal_default",$_REQUEST['sucursal'],time() + (86400 * 30));	 	
 	}	 	
 ?>
@@ -46,7 +46,7 @@
 						083
 					</td>
 					<td class="tdClass">
-						<input type="number" name="centavos" required="required" value="<?php if(isset($_REQUEST['centavos'])){echo $_REQUEST['centavos'];}?>" class="titulo1" style="width:100px">
+						<input type="number" name="centavos" required="required" value="0" class="titulo1" style="width:100px">
 					</td>
 				</tr>
 				<tr>
@@ -57,7 +57,7 @@
 						084
 					</td>
 					<td class="tdClass">
-						<input type="number" name="peso" required="required" value="<?php if(isset($_REQUEST['peso'])){echo $_REQUEST['peso'];}?>" class="titulo1" style="width:100px">
+						<input type="number" name="peso" required="required" value="0" class="titulo1" style="width:100px">
 					</td>
 				</tr>
 				<tr>
@@ -68,7 +68,7 @@
 						085
 					</td>
 					<td class="tdClass">
-						<input type="number" name="dospesos" required="required" value="<?php if(isset($_REQUEST['dospesos'])){echo $_REQUEST['dospesos'];}?>" class="titulo1" style="width:100px">
+						<input type="number" name="dospesos" required="required" value="0" class="titulo1" style="width:100px">
 					</td>
 				</tr>
 			</table>

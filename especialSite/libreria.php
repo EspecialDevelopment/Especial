@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * a = &aacute 
+ * é = &eacute
+ * í = &iacute
+ * ó = &oacute
+ * ú = &uacute
+ * ñ = &ntilde
+*/
 	function conexionString()
 	{
 		$xml=simplexml_load_file("conexion.xml");
@@ -37,7 +45,7 @@
 
 		echo $conexion->connect_error;
 
-		$sql = 'SELECT id_suc, nom_suc FROM sucursal';
+		$sql = 'SELECT id_suc, nom_suc FROM sucursal ORDER BY nom_suc ASC';
 
 		$resultado = $conexion->query($sql);
 
@@ -56,11 +64,11 @@
     		{echo $_COOKIE["sucursal_default"];
     			if ($_COOKIE["sucursal_default"] == $row["id_suc"])
     			{
-        			echo '<option value="'.$row["id_suc"].'" selected>' . $row["nom_suc"]. '</option>';
+        			echo '<option value="'.$row["id_suc"].'" selected>' .utf8_encode($row["nom_suc"]). '</option>';
     			}
     			else
     			{
-    				echo '<option value="'.$row["id_suc"].'">' . $row["nom_suc"]. '</option>';
+    				echo '<option value="'.$row["id_suc"].'">' .utf8_encode($row["nom_suc"]). '</option>';
     			}
     		}
 
@@ -107,29 +115,33 @@
 
 		$resultado = $conexion->query($sql);
 
-		$_SESSION['envio'] = 'La existecia fue enviada el dï¿½a '.$fecha.' a las '.date("h:i:s");
+		$_SESSION['envio'] = 'La existecia fue enviada el d&iacutea '.$fecha.' a las '.date("h:i:s");
 
-		echo '<script>window.location.href = "http://www.panaderialaespecial.com/test/";</script>';
+		echo '<script>window.location.href = "http://www.panaderialaespecial.com/080/";</script>';
 
 
 	}
-	function generaTabla($sucursal)
+	
+	function generaTabla($sucursal,$fecha)
 	{
 		$conexion = conexionString();
 
-		date_default_timezone_set("America/Mexico_City");
+		if ($fecha == '0')
+		{
+			date_default_timezone_set("America/Mexico_City");
 
-		$fecha = date("Y-m-d");
+			$fecha = date("Y-m-d");
 
+		}
+		
 		echo '<table class="tableClass" style="font-size:20	px;font-family:arial;width:150px;margin-left:5px;margin-right:auto;margin-bottom:5px;float:left">';
-
+		
 		$sql = "SELECT cantidad_se FROM sucursal_efectivo ".
 				"INNER JOIN sucursal ".
 				"ON sucursal_efectivo.Sucursal_id_suc = sucursal.id_suc ".
 				"WHERE ((fecha_se = "."'".$fecha."') ".
 				"AND (nom_suc ="."'".$sucursal."'"."))".
 				"ORDER BY efectivo_id_efe ASC";
-
 		$resultado = $conexion->query($sql);
 
 		echo '<tr>';
@@ -194,37 +206,38 @@
 
 	}
 
-	function muestraMorralla()
+	function muestraMorralla($fecha)
 	{
-		generaTabla('COYOL');
-		generaTabla('DIAZ MIRï¿½N');
-		generaTabla('TORRENTES');
-		generaTabla('BRAVO');
-		generaTabla('ALEMAN');
-		generaTabla('DON JAMON');
-		generaTabla('CORTES');
-		generaTabla('PAGES');
-		generaTabla('BOMBEROS');
-		generaTabla('SERDAN');
-		generaTabla('INDEPENDENCIA');
-		generaTabla('ALLENDE');
-		generaTabla('MORALES');
-		generaTabla('URIBE');
-		generaTabla('ZARAGOZA');
-		generaTabla('COSTA VERDE');
-		generaTabla('BERNAL');
-		generaTabla('PALMAS');
-		generaTabla('ALACIO');
-		generaTabla('ESPAï¿½A');
-		generaTabla('BOCA');
-		generaTabla('FLORESTA');
-		generaTabla('LAGUNA');
-		generaTabla('MONTEALBAN');
-		generaTabla('VEGAS');
-		generaTabla('VOLCANES');
-		generaTabla('JUAN SOTO');
-		generaTabla('VISTAMAR');
-
+		
+		generaTabla('COYOL',$fecha);
+		generaTabla('DIAZ MIRON',$fecha);
+		generaTabla('TORRENTES',$fecha);
+		generaTabla('BRAVO',$fecha);
+		generaTabla('ALEMAN',$fecha);
+		generaTabla('DON JAMON',$fecha);
+		generaTabla('CORTES',$fecha);
+		generaTabla('PAGES',$fecha);
+		generaTabla('BOMBEROS',$fecha);
+		generaTabla('SERDAN',$fecha);
+		generaTabla('INDEPENDENCIA',$fecha);
+		generaTabla('ALLENDE',$fecha);
+		generaTabla('MORALES',$fecha);
+		generaTabla('URIBE',$fecha);
+		generaTabla('ZARAGOZA',$fecha);
+		generaTabla('COSTA VERDE',$fecha);
+		generaTabla('BERNAL',$fecha);
+		generaTabla('PALMAS',$fecha);
+		generaTabla('ALACIO',$fecha);
+		generaTabla('ESPANA',$fecha);
+		generaTabla('BOCA',$fecha);
+		generaTabla('FLORESTA',$fecha);
+		generaTabla('LAGUNA',$fecha);
+		generaTabla('MONTEALBAN',$fecha);
+		generaTabla('VEGAS',$fecha);
+		generaTabla('VOLCANES',$fecha);
+		generaTabla('JUAN SOTO',$fecha);
+		generaTabla('VISTAMAR',$fecha);
+		generaTabla('MORALESII',$fecha);
 	}
 
 ?>
