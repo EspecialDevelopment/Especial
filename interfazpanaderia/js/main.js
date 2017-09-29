@@ -1,11 +1,24 @@
 'use strict';
-var mainframe;
+var mainframe, rightarrowtest;
+
+function connectToServer () {
+
+}
+
+function init () {
+    mainframe = document.getElementById('interface');
+    rightarrowtest = document.querySelector('.row:last-child .cell:nth-child(2) button');
+}
 
 window.addEventListener('load', function () {
-    mainframe = document.getElementById('interface');
-    
-    setInterval(function () {
-        console.log(mainframe.clientHeight, mainframe.clientWidth);
-    },
-    500);
+    init();
+
+    rightarrowtest.classList.add('right-arrow');
+
+    var buttons = document.querySelectorAll('button');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.add('no-image');
+    }
+
+    document.getElementById('interface').innerText = connectToServer();
 });

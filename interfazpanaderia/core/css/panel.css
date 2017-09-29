@@ -1,0 +1,48 @@
+.row,
+.cell {
+  box-sizing: border-box;
+}
+
+button {
+  height: 100%;
+  width: 100%;
+}
+
+button.no-image {
+  background-image: url("../img/list/bread.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 50%;
+}
+
+#list {
+  padding: 5px 0;
+}
+
+#list .row {
+  height: 25%;
+  width: 100%;
+  background-color: magenta;
+}
+
+#list .row .cell {
+  float: left;
+  padding: 1px;
+  height: 100%;
+  width: 33.33333%;
+  background-color: yellow;
+}
+
+#list #buscar button {
+  background-image: url("../img/list/magni.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 70%;
+}
+
+#list .right-arrow {
+  background-image: url("../img/list/arrow-right.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 75% auto;
+}

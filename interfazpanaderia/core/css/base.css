@@ -33,6 +33,11 @@ body {
   background-repeat: no-repeat;
   background-size: 100% 107%;
   background-position: 0 30%;
+  pointer-events: none;
+}
+
+#interface:hover::before {
+  opacity: 0;
 }
 
 #interface > .wrapper {
@@ -50,6 +55,7 @@ body {
   float: left;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
 }
 
 #root > .left-panel {
