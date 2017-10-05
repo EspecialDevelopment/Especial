@@ -1,0 +1,106 @@
+
+      div{
+        border:solid;
+        border-width:thin;
+        background:black;
+      }
+      .divFamilias{
+        float:left;
+        border-color:black;
+        background:white;
+      }
+      .divProductos{
+        height:100px;
+        float:left;
+        border-color:black;
+        background:white;
+      }
+      .divBotones{
+        float:left;
+        border-color:black;
+        background:black;
+        border-width:1px;
+      }
+      .divTabla{
+        height:100px;
+        width:100px;
+        float:left;
+        border-color:black;
+        z-index:1;
+        overflow-y:auto;
+        overflow-x:hidden;
+        background:white;
+        
+      }
+      .divCalculadora{
+        height:100px;
+        width:100px;
+        float:left;
+        border-color:black;
+        border-width:1px;
+        z-index:1;
+        
+      }
+      .cssTabla{
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+        margin-left:auto;
+        margin-right:auto;
+        
+      }
+      .cssCelda{
+        border-right: 1px solid #bbb;
+        border-bottom: 1px solid #bbb;
+        box-shadow: 2px 2px 1px #e5dfcc;
+        font-family:arial;
+        font-size:10px;
+      }
+      .cssCeldaTitulo{
+         border-right: 1px solid #bbb;
+         border-bottom: 1px solid #bbb;
+         box-shadow: 2px 2px 1px #e5dfcc;
+         background: #778899;
+         color: #111;     
+         font-family:arial;
+         font-size:15px;
+      }
+      .cssCeldaCalc{
+         border-right: 1px solid black;
+         border-bottom: 1px solid black;
+         box-shadow: 2px 2px 1px #e5dfcc;
+         font-family:arial;
+         font-size:20px;
+         text-align:center;
+         font-weight:900;
+         background:#ADD8E6
+      }
+      .cssCalcVal{
+         border:none;
+         font-family:arial;
+         width:99%;
+         font-size:20px;
+         text-align:left;
+         background:black;
+         color:white;
+      }
+    .cssBoton{
+         border:solid;
+         border-width:1px;
+         border-color:black;
+         font-family:arial;
+         font-size:14px;
+         font-weight:bolder;
+         text-align:center;
+         background:#9999cc;
+         color:black;
+      }
+  .cssBoton:active{
+      
+         background:red;
+         color:black;
+         cursor:pointer;
+      }
+      
+     

@@ -1,0 +1,62 @@
+.fila,
+.celda {
+  box-sizing: border-box;
+}
+
+button {
+  height: 100%;
+  width: 100%;
+}
+
+button .etiqueta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+  width: 100%;
+  font-size: 1.1em;
+  font-variant: small-caps;
+  font-weight: bold;
+  text-shadow: -1px -1px 1.1px #fff, -1px 1px 1.1px #fff, 1px -1px 1.1px #fff, 1px 1px 1.1px #fff;
+  background-color: transparent;
+}
+
+#f {
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+#f .fila {
+  height: 25%;
+  width: 100%;
+  background-color: magenta;
+}
+
+#f .fila .celda {
+  float: left;
+  padding: 1px;
+  height: 100%;
+  width: 33.33333%;
+  background-color: yellow;
+}
+
+/* #f #buscar button {
+  background-image: url("../img/list/magni.png");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 70%;
+} */
+
+#f .flecha-izquierda {
+  background-image: url("../img/list/arrow-right.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 75% auto;
+}
+
+#f .flecha-derecha {
+  background-image: url("../img/list/arrow-right.png");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 75% auto;
+}
