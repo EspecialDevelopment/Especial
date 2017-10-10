@@ -1,0 +1,264 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema PVE
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema PVE
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `PVE` DEFAULT CHARACTER SET latin1 ;
+USE `PVE` ;
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Usuarios` (
+  `cv_usuario` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nom_usuario` VARCHAR(15) NOT NULL,
+  `ap_usuario` VARCHAR(15) NOT NULL,
+  `am_usuario` VARCHAR(15) NULL,
+  `nivel_usuario` TINYINT UNSIGNED NOT NULL,
+  `edo_usuario` VARCHAR(1) NOT NULL COMMENT 'LOS ESTADOS DEL USUARIO PUEDEN SER \n- A(ACTIVO) SI SE ENCUENTRA   COBRANDO O \n\n- I(INACTIVO) SI NO SE   ENCUENTRA COBRANDO',
+  PRIMARY KEY (`cv_usuario`))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1
+COMMENT = 'Usuarios del Sistema - CAJEROS - ADMINISTRADORES';
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Productos` (
+  `cv_prod` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fam_prod` VARCHAR(45) NOT NULL COMMENT 'FAMILIA DE PRODUCTOS EJ: PRODUCTO, DESPACHO, ALMACEN',
+  `sfam_prod` VARCHAR(45) NOT NULL COMMENT 'SUB FAMILIA DE PRODUCTOS EJ. FEITE, ROYAL, BIZCOCHO',
+  `desc_prod` VARCHAR(250) NOT NULL,
+  `timp_prod` TINYINT(3) NOT NULL COMMENT 'TIPO DE IMPUESTO 8% - 16%',
+  `cantidad_prod` DECIMAL(7,2) NOT NULL,
+  PRIMARY KEY (`cv_prod`))
+ENGINE = MyISAM
+COMMENT = 'Catálogo de Productos';
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Sucursales`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Sucursales` (
+  `cv_sucursal` INT UNSIGNED NOT NULL,
+  `pref_nota_sucursal` VARCHAR(2) NOT NULL,
+  `rs_sucursal` VARCHAR(100) NOT NULL COMMENT 'Razón Social',
+  `rfc_sucursal` VARCHAR(13) NOT NULL COMMENT 'RFC de la Razón Social',
+  `dir_rs_sucursal` VARCHAR(80) NOT NULL COMMENT 'Dirección Fiscal',
+  `nom_sucursal` VARCHAR(45) NOT NULL COMMENT 'Nombre de la Sucursal',
+  `dir_sucursal` VARCHAR(80) NOT NULL COMMENT 'Dirección de la Sucursal',
+  `tel_sucursal` VARCHAR(45) NULL,
+  `afs_sucursal` SMALLINT NULL,
+  `edo_sucursal` VARCHAR(1) NOT NULL,
+  `ip_sucursal` VARCHAR(45) NOT NULL COMMENT 'UBICACIÓN EN LA RED DE LA SUCURSAL',
+  PRIMARY KEY (`cv_sucursal`),
+  UNIQUE INDEX `pref_nota_sucursal_UNIQUE` (`pref_nota_sucursal` ASC),
+  UNIQUE INDEX `cv_sucursal_UNIQUE` (`cv_sucursal` ASC))
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Cortes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Cortes` (
+  `folio_corte` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Sucursal_cv_sucursal` INT UNSIGNED NOT NULL,
+  `Usuarios_cv_usuario` INT UNSIGNED NOT NULL,
+  `fecha_corte` DATE NULL,
+  `hora_corte` TIME NULL,
+  `mf_corte` DECIMAL(8,2) NULL COMMENT 'Monto fiscal',
+  `mr_corte` DECIMAL(8,2) NULL COMMENT 'Monto real',
+  `tipo_corte` VARCHAR(1) NULL COMMENT 'EL TIPO DEL CORTE PUEDE SER PARCIAL O TOTAL, SOLO SE GUARDARÁ AL FINAL EL CORTE TOTAL',
+  PRIMARY KEY (`folio_corte`),
+  INDEX `fk_Notas_Corte_Sucursal1` (`Sucursal_cv_sucursal` ASC),
+  INDEX `fk_Notas_Corte_Usuarios1` (`Usuarios_cv_usuario` ASC))
+ENGINE = MyISAM
+COMMENT = 'Historial de cortes Parciales o Totales';
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Clientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Clientes` (
+  `cv_cliente` INT NOT NULL AUTO_INCREMENT,
+  `nom_cliente` VARCHAR(150) NOT NULL,
+  `dir_cliente` VARCHAR(150) NOT NULL,
+  `col_cliente` VARCHAR(45) NULL,
+  `rfc_cliente` VARCHAR(13) NULL,
+  `edo_cliente` VARCHAR(45) NULL,
+  `ciudad_cliente` VARCHAR(45) NULL,
+  `tel_cliente` VARCHAR(45) NULL,
+  `mail_cliente` VARCHAR(45) NULL,
+  PRIMARY KEY (`cv_cliente`))
+ENGINE = MyISAM
+AUTO_INCREMENT = 1;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Notas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Notas` (
+  `id_nota` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `folio_nota` INT UNSIGNED NOT NULL,
+  `Cortes_folio_corte` INT UNSIGNED NOT NULL,
+  `Clientes_cv_cliente` INT UNSIGNED NOT NULL,
+  `fecha_nota` DATE NOT NULL,
+  `hora_nota` TIME NOT NULL,
+  `monto_nota` DECIMAL(7,2) NOT NULL COMMENT 'TOTAL DE LA VENTA',
+  `edo_nota` VARCHAR(1) NOT NULL COMMENT 'ESTADO DE LA NOTA - A(ACTIVA) - C(CANCELADA) ',
+  PRIMARY KEY (`id_nota`),
+  INDEX `fk_Notas_Clientes1` (`Clientes_cv_cliente` ASC),
+  INDEX `fk_Notas_Cortes1_idx` (`Cortes_folio_corte` ASC))
+ENGINE = MyISAM
+COMMENT = 'Historico de Ventas';
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`DNotas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`DNotas` (
+  `cv_detalle` BIGINT NOT NULL AUTO_INCREMENT,
+  `Notas_id_nota` INT UNSIGNED NOT NULL,
+  `Productos_cv_prod` INT UNSIGNED NOT NULL,
+  `cantidad_producto` INT UNSIGNED NOT NULL,
+  `tot_venta` DECIMAL(7,2) UNSIGNED NOT NULL,
+  `timp_venta` TINYINT(3) UNSIGNED NOT NULL COMMENT 'TIPO DE IMPUESTO DE LA VENTA 8% - 16% - ETC',
+  `imp_venta` DECIMAL(7,2) UNSIGNED NOT NULL COMMENT 'MONTO DEL SOLO DEL IMPUESTO',
+  PRIMARY KEY (`cv_detalle`),
+  INDEX `fk_Notas_Detalle_Notas1_idx` (`Notas_id_nota` ASC),
+  INDEX `fk_Notas_Detalle_Productos1_idx` (`Productos_cv_prod` ASC))
+ENGINE = MyISAM
+COMMENT = 'Historial de Ventas';
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Tarifas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Tarifas` (
+  `id_tarifa` TINYINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nom_tarifa` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_tarifa`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Precios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Precios` (
+  `id_precio` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Tarifas_id_tarifa` TINYINT(3) UNSIGNED NOT NULL,
+  `Productos_cv_prod` INT UNSIGNED NOT NULL,
+  `precio_tarifa` DECIMAL(7,2) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id_precio`),
+  INDEX `fk_Precios_Tarifas1_idx` (`Tarifas_id_tarifa` ASC),
+  INDEX `fk_Precios_Productos1_idx` (`Productos_cv_prod` ASC),
+  CONSTRAINT `fk_Precios_Tarifas1`
+    FOREIGN KEY (`Tarifas_id_tarifa`)
+    REFERENCES `PVE`.`Tarifas` (`id_tarifa`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Precios_Productos1`
+    FOREIGN KEY (`Productos_cv_prod`)
+    REFERENCES `PVE`.`Productos` (`cv_prod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`TMovsInventario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`TMovsInventario` (
+  `cv_tmovinv` TINYINT UNSIGNED NOT NULL,
+  `desc_tmovinv` VARCHAR(45) NOT NULL,
+  `tipo_tmovinv` VARCHAR(45) NOT NULL COMMENT 'TIPOS DE MOVIMIENTO (ENTRADA O SALIDA)',
+  PRIMARY KEY (`cv_tmovinv`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`MovsInventario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`MovsInventario` (
+  `cv_minv` INT NOT NULL,
+  `cv_tmovinv` TINYINT UNSIGNED NOT NULL,
+  `sorig_minv` INT UNSIGNED NOT NULL COMMENT 'SUCURSAL DE ENVÍO DE LOS SUMINISTROS',
+  `sdest_minv` INT UNSIGNED NOT NULL COMMENT 'SUCURSAL DE RECEPCIÓN DE LOS SUMINISTROS\n',
+  `fecha_minv` DATE NOT NULL,
+  `hora_minv` TIME NOT NULL,
+  `edo_minv` VARCHAR(1) NOT NULL COMMENT 'ESTADO DE MOVIMIENTO, T (EN TRAMITE), C (CANCELADO), T(TERMINADO)',
+  PRIMARY KEY (`cv_minv`),
+  INDEX `fk_Suministros_Sucursales1_idx` (`sorig_minv` ASC),
+  INDEX `fk_Suministros_Sucursales2_idx` (`sdest_minv` ASC),
+  INDEX `fk_MovsInventario_TMovsInventario1_idx` (`cv_tmovinv` ASC),
+  CONSTRAINT `fk_Suministros_Sucursales1`
+    FOREIGN KEY (`sorig_minv`)
+    REFERENCES `PVE`.`Sucursales` (`cv_sucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Suministros_Sucursales2`
+    FOREIGN KEY (`sdest_minv`)
+    REFERENCES `PVE`.`Sucursales` (`cv_sucursal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_MovsInventario_TMovsInventario1`
+    FOREIGN KEY (`cv_tmovinv`)
+    REFERENCES `PVE`.`TMovsInventario` (`cv_tmovinv`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`DMovsInventario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`DMovsInventario` (
+  `cv_dminv` INT NOT NULL,
+  `cv_minv` INT NOT NULL,
+  `Productos_cv_prod` INT UNSIGNED NOT NULL,
+  `cantidad_prod` INT NOT NULL,
+  PRIMARY KEY (`cv_dminv`),
+  INDEX `fk_LSuministros_Productos1_idx` (`Productos_cv_prod` ASC),
+  INDEX `fk_DMovsInventario_MovsInventario1_idx` (`cv_minv` ASC),
+  CONSTRAINT `fk_LSuministros_Productos1`
+    FOREIGN KEY (`Productos_cv_prod`)
+    REFERENCES `PVE`.`Productos` (`cv_prod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DMovsInventario_MovsInventario1`
+    FOREIGN KEY (`cv_minv`)
+    REFERENCES `PVE`.`MovsInventario` (`cv_minv`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `PVE`.`Inventario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PVE`.`Inventario` (
+  `cv_inv` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cantidad_inv` INT UNSIGNED NOT NULL,
+  `Productos_cv_producto` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`cv_inv`),
+  INDEX `fk_Inventario_Productos1_idx` (`Productos_cv_producto` ASC),
+  CONSTRAINT `fk_Inventario_Productos1`
+    FOREIGN KEY (`Productos_cv_producto`)
+    REFERENCES `PVE`.`Productos` (`cv_prod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

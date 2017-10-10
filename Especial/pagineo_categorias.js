@@ -103,27 +103,43 @@ function crearBotonesfamilia () {
     console.log(botones);
 }
 
-function init () {
-    crearBotonesfamilia();
-    panes = ['asdasd', 'AHDS', '3132', 'LLL233'];
 
+function init (familias) {
+   
+	/* ADECUACIONES.
+	 * 1.- SI NO HAY SUFICIENTES FAMILIAS PARA LLENAR TODOS LOS ESPACIOS, ENTONCES NO CREAR BOTONES
+	 * 2.- EL BOTON DE FLECHA DEBE DE TENER UNA IMAGEN.
+	 * 3.- SIMPLIFICAR EL CSS DE LOS BOTONES, HACERLOS COMO LOS DEL MENU PERO EN OTRO COLOR.
+	 */
+	
+	/* ACTUALIZACIONES
+	 * CREAR LOS BOTONES DE PRODUCTOS SEGÚN LA FAMILIA SELECCIONADA.
+	 * AL PRESIONAR BOTÓN CREAR CONSULTA UTIIZANDO XMLHttpRequest
+	 * ENVIANDO EL DATO A CONSULTAR A UNA SCRIPT PHP CON EL NOMBRE DE conProductos.php
+	 * ESTE SCRIPT RETONARÁ COMO EN EL EJEMPLO DE LAS FAMILIAS UN JSON CON LOS PRODUCTOS
+	 * CORRESPONDIENTES A LA FAMILIA SELECCIONADA INCLUYENDO EN CADA BOTÓN desc_prod 
+	 * Y OCULTO precio_tarifa.
+	 */
+	
+	crearBotonesfamilia();
+   
     for (let letra = 0, min = 'a'.charCodeAt(0), max = 'z'.charCodeAt(0); min + letra <= max; letra++) {
-        panes.push(
+        familias.push(
             String.fromCharCode(min + letra)
         );
     }
 
-    if (panes.length <= botones.length) {
+    if (familias.length <= botones.length) {
         for (let i = 0, l = botones.length; i < l; i++) {
             botones[i].style['display'] = 'none';
         }
-        for (let i = 0, l = panes.length; i < l; i++) {
+        for (let i = 0, l = familias.length; i < l; i++) {
             botones[i].style['display'] = 'block';
-            botones[i].querySelector('.etiqueta').innerText = panes[i];
+            botones[i].querySelector('.etiqueta').innerText = familias[i];
         }
     } else {
         for (let i = 0, l = botones.length; i < l - 1; i++) {
-            botones[i].querySelector('.etiqueta').innerText = panes[i];
+            botones[i].querySelector('.etiqueta').innerText = familias[i];
         }
         botones[botones.length - 1].querySelector('.etiqueta').innerText = '->';
         botones[botones.length - 1].classList.add('flecha-derecha');
@@ -134,8 +150,57 @@ function init () {
     }
 }
 
+function getFamilias()
+{
+	var xmlDoc,inputs,info,js;
+	
+	try 
+	{
+		if (window.XMLHttpRequest)
+	    {
+		  var xhttp = new XMLHttpRequest();
+	    } 
+		else // code for IE5 and IE6
+	    {
+		  var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	    }
+		
+		xhttp.onreadystatechange = function() 
+		{
+	        if (this.readyState == 4 && this.status == 200) 
+	        {
+	        	
+	            var js 	= JSON.parse(this.responseText);
+	            
+	         	init(js);
+	            
+	        }
+	        
+	    };
+		
+		xhttp.open('POST', 'http://localhost/PVE/conFamilias.php');
+		
+	    xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		
+	    xhttp.send();
+		
+	
+	}
+	catch (e) 
+	{	
+		alert(e.message);
+	}	
+	
+
+}
+
+
+
 window.addEventListener('load', function () {
-    init();
+    
+	//init();
+	
+	getFamilias();
 
 
 });
