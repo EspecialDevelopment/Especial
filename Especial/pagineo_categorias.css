@@ -4,21 +4,29 @@
 }
 
 button {
+  margin: 0;
+  padding: 0;
   height: 100%;
   width: 100%;
+  background-color: #9999cc;
+  border-style: solid;
+  border-width: 1px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 button .etiqueta {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  height: 100%;
   width: 100%;
   font-size: 1.1em;
-  font-variant: small-caps;
   font-weight: bold;
-  text-shadow: -1px -1px 1.1px #fff, -1px 1px 1.1px #fff, 1px -1px 1.1px #fff, 1px 1px 1.1px #fff;
   background-color: transparent;
+  border-width: 0;
 }
 
 #f {
@@ -29,23 +37,17 @@ button .etiqueta {
 #f .fila {
   height: 25%;
   width: 100%;
-  background-color: magenta;
+  background-color: transparent;
+  border-width: 0;
 }
 
 #f .fila .celda {
   float: left;
-  padding: 1px;
   height: 100%;
-  width: 33.33333%;
-  background-color: yellow;
+  width: calc(100% / 3);
+  background-color: transparent;
+  border-width: 1px;
 }
-
-/* #f #buscar button {
-  background-image: url("../img/list/magni.png");
-  background-repeat: no-repeat;
-  background-position: 50%;
-  background-size: 70%;
-} */
 
 #f .flecha-izquierda {
   background-image: url("../img/list/arrow-right.png");
