@@ -19,8 +19,9 @@ if ($resultado->num_rows >= 1)
 {
 	while($r = $resultado->fetch_row())
 	{
-		$rows[] = $r;
+		$rows[] = $r[0]; // ya que $r = ['nombre de pan'] entonces $r[0] = 'nombre de pan';
 	}
+
 
 	echo json_encode($rows);
 } else {
